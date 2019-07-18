@@ -1,6 +1,7 @@
 // frozen_string_literal: true
 import React from 'react';
 import Comment from './Comment';
+import CommentForm from './CommentForm'
 
 class CommentBox extends React.Component {
 	
@@ -8,19 +9,35 @@ class CommentBox extends React.Component {
 		super(props);
 
 		this.state = {
-			showComments: false
+			showComments: false,
+			comments: [
+				{id: 1, author: 'Morgan MrCircuit', body: 'Great Picture!'},
+				{id: 2, author: 'Bending Bender', body: 'Excellent stuff'},
+				{id: 3, author: 'Stevie Oznick', body: 'A gred Book'}
+			]
 		}
 
-		this.getComments = this.getComments.bind(this);
+		this.getComments 			= this.getComments.bind(this);
 		this.getCommentsTitle = this.getCommentsTitle.bind(this);
-		this.handleClick = this.handleClick.bind(this);
+		this.handleClick 			= this.handleClick.bind(this);
+		this.addComment 			= this.addComment.bind(this);
 	}
 
 	handleClick() {
 		this.setState({
 			showComments: !this.state.showComments
 		})
-	}
+	};
+
+	addComment(author, body) {
+		const comment = {
+			id: this.state.comments.length + 1,
+			author,
+			body
+		}
+
+		this.setState({ comments: this.state.comments.concat([comment]) });
+	};
 
 	getCommentsTitle(commentCount) {
 		if(commentCount == 0) {
@@ -33,16 +50,13 @@ class CommentBox extends React.Component {
 	}
 
 	getComments() {
-		const commentList = [
-			{id: 1, author: 'Morgan MrCircuit', body: 'Great Picture!'},
-			{id: 2, author: 'Bending Bender', body: 'Excellent stuff'},
-			{id: 3, author: 'Stevie Oznick', body: 'A gred Book'}
-		];
-
-		return commentList.map(comment => {
-			return <Comment key={comment.id} author={comment.author} 
-							body={comment.body} />
-		})
+		return this.state.comments.map(comment => {
+			return(
+				<Comment key={comment.id} 
+								 author={comment.author} 
+								 body={comment.body} />
+			);
+		});
 	}
 
 	render(){
@@ -60,6 +74,8 @@ class CommentBox extends React.Component {
 
 		return(
 			<div className='comment-box'>
+				<CommentForm addComment={() => {this.addComment()}}/>
+
 				<h3>Comments</h3>
 				<button onClick={()=> {this.handleClick(this)}}>
 					{buttonText}
