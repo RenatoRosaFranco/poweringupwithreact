@@ -7,8 +7,19 @@ class CommentBox extends React.Component {
 	constructor(props) {
 		super(props);
 
+		this.state = {
+			showComments: false
+		}
+
 		this.getComments = this.getComments.bind(this);
 		this.getCommentsTitle = this.getCommentsTitle.bind(this);
+		this.handleClick = this.handleClick.bind(this);
+	}
+
+	handleClick() {
+		this.setState({
+			showComments: !this.state.showComments
+		})
 	}
 
 	getCommentsTitle(commentCount) {
@@ -36,14 +47,27 @@ class CommentBox extends React.Component {
 
 	render(){
 		const comments = this.getComments();
+		let commentNodes;
+		let buttonText = 'Show comments';
+		
+		if (this.state.showComments) {
+			commentNodes = <div className='comment-list'>{comments}</div>
+		}
+
+		if (this.state.showComments) {
+			buttonText = 'Hide comments';
+		}
 
 		return(
 			<div className='comment-box'>
 				<h3>Comments</h3>
+				<button onClick={()=> {this.handleClick(this)}}>
+					{buttonText}
+				</button>
 				<h4 className='comment-count'>
 				{this.getCommentsTitle(comments.length)}</h4>
 				<div className='comment-list'>
-					{comments}
+					{commentNodes}
 				</div>
 			</div>
 		);
