@@ -4,6 +4,8 @@ import './App.css';
 
 import StoryBox from './components/StoryBox';
 import CommentBox from './components/CommentBox';
+import axios from 'axios';
+import jquery from 'jquery';
 
 function App() {
   return (

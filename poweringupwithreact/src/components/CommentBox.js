@@ -1,4 +1,5 @@
 // frozen_string_literal: true
+
 import React from 'react';
 import Comment from './Comment';
 import CommentForm from './CommentForm'
@@ -10,17 +11,13 @@ class CommentBox extends React.Component {
 
 		this.state = {
 			showComments: false,
-			comments: [
-				{id: 1, author: 'Morgan MrCircuit', body: 'Great Picture!'},
-				{id: 2, author: 'Bending Bender', body: 'Excellent stuff'},
-				{id: 3, author: 'Stevie Oznick', body: 'A gred Book'}
-			]
+			comments: []
 		}
 
-		this.getComments 			= this.getComments.bind(this);
+		this.getComments = this.getComments.bind(this);
 		this.getCommentsTitle = this.getCommentsTitle.bind(this);
-		this.handleClick 			= this.handleClick.bind(this);
-		this.addComment 			= this.addComment.bind(this);
+		this.handleClick = this.handleClick.bind(this);
+		this.addComment = this.addComment.bind(this);
 	}
 
 	handleClick() {
@@ -30,13 +27,9 @@ class CommentBox extends React.Component {
 	};
 
 	addComment(author, body) {
-		const comment = {
-			id: this.state.comments.length + 1,
-			author,
-			body
-		}
-
+		const comment = { id: this.state.comments.length + 1, author, body}
 		this.setState({ comments: this.state.comments.concat([comment]) });
+		console.log('Here we are');
 	};
 
 	getCommentsTitle(commentCount) {
